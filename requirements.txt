@@ -1,3 +1,4 @@
 requests
 azure-data-tables
 curl_cffi
+dotenv
