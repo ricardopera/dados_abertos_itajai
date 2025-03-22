@@ -37,12 +37,18 @@ def salvar_dados_azure(dados, referencia, codigo_unidade):
             print(f"Estrutura de dados inválida para referência {referencia}")
             return
             
-        # Cria uma entidade para cada registro
-        for item in dados["registros"]:
+        # Cria uma entidade para cada registro (em ordem inversa)
+        registros_encontrados = 0
+        registros_existentes = 0
+        registros_total = len(dados["registros"])
+        
+        # Inverte a ordem dos registros para processamento
+        for item in reversed(dados["registros"]):
             if "registro" not in item:
                 continue
                 
             registro = item["registro"]
+            registros_encontrados += 1
             
             # Verifica se matrícula existe no registro
             if "matricula" not in registro or "numero" not in registro["matricula"]:
@@ -66,9 +72,35 @@ def salvar_dados_azure(dados, referencia, codigo_unidade):
             # Adiciona dados do registro de forma serializada para evitar problemas de estrutura
             entity["dados_json"] = json.dumps(registro)
             
-            table_client.create_entity(entity=entity)
+            # Tenta criar a entidade com tratamento específico para entidades existentes
+            max_tentativas = 7
+            tentativa = 0
+            while tentativa < max_tentativas:
+                try:
+                    table_client.create_entity(entity=entity)
+                    break  # Sucesso, sai do loop
+                except Exception as e:
+                    erro_str = str(e)
+                    # Verifica se o erro é de entidade que já existe
+                    if "EntityAlreadyExists" in erro_str:
+                        registros_existentes += 1
+                        print(f"Registro {registros_encontrados}/{registros_total} já existe. Entidade: {entity['PartitionKey']} - {entity['RowKey']}")
+                        break  # Sai do loop, o registro já existe
+                    else:
+                        # Para outros erros, tenta novamente
+                        tentativa += 1
+                        print(f"Erro ao salvar registro (tentativa {tentativa}/{max_tentativas}): {e}")
+                        if tentativa == max_tentativas:
+                            print(f"Falha ao salvar registro após {max_tentativas} tentativas.")
+                        else:
+                            sleep(1)  # Aguarda um pouco antes de tentar novamente
             
-        print(f"Dados salvos com sucesso para {referencia} na unidade {codigo_unidade}.")
+            # Se todos os registros já existem, podemos parar o processamento
+            if registros_existentes >= 5 and registros_encontrados >= 10:
+                print(f"Múltiplos registros já existem para {referencia} na unidade {codigo_unidade}. Pulando para o próximo arquivo.")
+                return
+            
+        print(f"Dados salvos com sucesso para {referencia} na unidade {codigo_unidade}. Processados: {registros_encontrados}, já existentes: {registros_existentes}")
     except Exception as e:
         print(f"Erro ao salvar dados no Azure: {e}")
 
