@@ -177,5 +177,5 @@ cython_debug/
 .json/
 .BKPjson/
 
-registro.csv
-registro.xlsx
+registros.csv
+registros.xlsx
