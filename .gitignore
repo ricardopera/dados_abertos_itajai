@@ -176,3 +176,6 @@ cython_debug/
 # Json store folder
 .json/
 .BKPjson/
+
+registro.csv
+registro.xlsx
