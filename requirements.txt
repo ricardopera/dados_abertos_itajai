@@ -3,4 +3,5 @@ azure-data-tables
 curl_cffi
 dotenv
 pandas
+openpyxl
 # dateutil

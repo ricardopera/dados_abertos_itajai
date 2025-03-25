@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Dados Abertos - Itajaí</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="favicon.png">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <img src="logo.png" alt="Prefeitura de Itajaí" class="logo">
+                <h1>Portal de Consulta de Dados Abertos</h1>
+            </div>
+            <p class="subtitle">Informações sobre remuneração de servidores</p>
+        </header>
+
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-search"></i>
+                <h2>Consulta de Dados Funcionais</h2>
+            </div>
+            <div class="card-body">
+                <form id="consultaForm">
+                    <div class="form-group">
+                        <label for="matricula">
+                            <i class="fas fa-id-card"></i>
+                            Matrícula do Servidor
+                        </label>
+                        <input type="text" id="matricula" name="matricula" placeholder="Digite o número da matrícula" required>
+                    </div>
+                    
+                    <div class="date-container">
+                        <div class="form-group">
+                            <label for="data_inicio">
+                                <i class="fas fa-calendar-alt"></i>
+                                Data Inicial
+                            </label>
+                            <input type="text" id="data_inicio" name="data_inicio" placeholder="DD/MM/AAAA" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="data_fim">
+                                <i class="fas fa-calendar-alt"></i>
+                                Data Final
+                            </label>
+                            <input type="text" id="data_fim" name="data_fim" placeholder="DD/MM/AAAA" required>
+                        </div>
+                    </div>
+
+                    <div class="button-container">
+                        <button type="submit" id="consultarBtn">
+                            <i class="fas fa-file-excel"></i>
+                            Gerar Relatório
+                        </button>
+                        <a href="#" id="linkDireto" class="link-button" target="_blank">
+                            <i class="fas fa-external-link-alt"></i>
+                            Abrir Link Direto
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div id="loading" class="hidden">
+            <div class="spinner"></div>
+            <p>Consultando dados, por favor aguarde...</p>
+        </div>
+
+        <div id="error" class="hidden">
+            <i class="fas fa-exclamation-triangle"></i>
+            <div id="error-message">Ocorreu um erro ao processar sua solicitação.</div>
+            <button id="btnTentarNovamente" class="secondary-button">
+                <i class="fas fa-sync"></i>
+                Tentar Novamente
+            </button>
+        </div>
+
+        <div class="info-section">
+            <div class="info-card">
+                <i class="fas fa-info-circle"></i>
+                <h3>Sobre o Portal</h3>
+                <p>Este portal permite a consulta de dados funcionais dos servidores públicos do município de Itajaí, dando acesso aos registros de pagamento em formato Excel.</p>
+            </div>
+            
+            <div class="info-card">
+                <i class="fas fa-question-circle"></i>
+                <h3>Como Utilizar</h3>
+                <p>Insira o número da matrícula do servidor e defina o período de consulta. O sistema gerará um relatório completo em formato Excel com todos os registros disponíveis.</p>
+            </div>
+            
+            <!-- <div class="info-card">
+                <i class="fas fa-shield-alt"></i>
+                <h3>Transparência</h3>
+                <p>Esta ferramenta faz parte do compromisso da Prefeitura de Itajaí com a transparência e o acesso à informação pública, em conformidade com a Lei de Acesso à Informação.</p>
+            </div> -->
+        </div>
+
+        <footer>
+            <p>&copy; 2025 Procuradoria-Geral do Município de Itajaí - Dados Abertos</p>
+            <div class="social-links">
+                <a href="https://github.com/ricardopera" target="_ blank"><i class="fab fa-github"></i></a>
+                <!-- <a href="https://www.facebook.com/prefeituraitajai" target="_blank"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.instagram.com/prefeituraitajai/" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.youtube.com/prefeituraitajai" target="_blank"><i class="fab fa-youtube"></i></a> -->
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

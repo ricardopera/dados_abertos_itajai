@@ -121,7 +121,7 @@ if __name__ == "__main__":
     
     # Pasta onde os arquivos serão salvos
     pasta_base = os.path.dirname(os.path.abspath(__file__))
-    pasta_json = os.path.join(pasta_base, ".json")
+    pasta_json = os.path.join(pasta_base, ".json2")
     
     print(f"Iniciando extração de dados de {data_inicio} até {data_fim} para unidade {codigo_unidade}")
     print(f"Os dados JSON brutos serão salvos em {pasta_json}")
